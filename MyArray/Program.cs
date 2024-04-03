@@ -14,7 +14,7 @@
         int[] array = new int[100];
         for(int i = 0; i< array.Length; i++)
         {
-            array[i] = r.Next(1000) * (1 - 2*r.Next(0, 2));
+            array[i] = r.Next(100) * (1 - 2*r.Next(0, 2));
         }
         int[] myArray = (int[])array.Clone();
         WriteArray(array);
@@ -25,8 +25,8 @@
         Console.WriteLine(MyArray.IndexOf(myArray, 3));
 
         Array.Sort(array);
-        //MyArray.Sort(myArray);
-        MyArray.InsertionSort(myArray);
+        MyArray.Sort(myArray);
+        //MyArray.InsertionSort(myArray);
         Console.WriteLine($"\nSort(array)");
         WriteArray(array);
         WriteArray(myArray);

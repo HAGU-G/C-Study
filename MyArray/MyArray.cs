@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 
 public class MyArray
 {
@@ -90,7 +89,7 @@ public class MyArray
             }
         }
         timeCheck.Stop();
-        Console.WriteLine($"걸린 시간 {timeCheck.ElapsedTicks}");
+        Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
     }
 
     public static void InsertionSort(int[] array)
@@ -110,10 +109,14 @@ public class MyArray
                 {
                     (array[j], array[j - 1]) = (array[j - 1], array[j]);
                 }
+                else
+                {
+                    break;
+                }
             }
         }
         timeCheck.Stop();
-        Console.WriteLine($"걸린 시간(ns) {timeCheck.ElapsedTicks}");
+        Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
     }
 
     public static int IndexOf(int[] array, int value)
