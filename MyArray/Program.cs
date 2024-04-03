@@ -11,10 +11,10 @@
     static void Main(string[] args)
     {
         Random r = new Random();
-        int[] array = new int[100];
+        int[] array = new int[10];
         for(int i = 0; i< array.Length; i++)
         {
-            array[i] = r.Next(100) * (1 - 2*r.Next(0, 2));
+            array[i] = r.Next(-100, 101);
         }
         int[] myArray = (int[])array.Clone();
         WriteArray(array);
