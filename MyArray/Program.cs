@@ -10,16 +10,23 @@
     }
     static void Main(string[] args)
     {
-        int[] array = { 10, 1, 2, 5, 3, -10, 7, -5598 };
+        Random r = new Random();
+        int[] array = new int[100];
+        for(int i = 0; i< array.Length; i++)
+        {
+            array[i] = r.Next(1000) * (1 - 2*r.Next(0, 2));
+        }
         int[] myArray = (int[])array.Clone();
+        WriteArray(array);
+        WriteArray(myArray);
 
-       
         Console.WriteLine($"\nIndexOf(array, 3)");
         Console.WriteLine(Array.IndexOf(array, 3));
         Console.WriteLine(MyArray.IndexOf(myArray, 3));
 
         Array.Sort(array);
-        MyArray.Sort(myArray);
+        //MyArray.Sort(myArray);
+        MyArray.InsertionSort(myArray);
         Console.WriteLine($"\nSort(array)");
         WriteArray(array);
         WriteArray(myArray);

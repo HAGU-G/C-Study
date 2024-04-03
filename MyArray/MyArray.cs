@@ -1,4 +1,7 @@
-﻿public class MyArray
+﻿using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
+
+public class MyArray
 {
     public static void Reverse(int[] array)
     {
@@ -69,6 +72,13 @@
 
     public static void Sort(int[] array)
     {
+        if (array.Length <= 1)
+        {
+            return;
+        }
+
+        Stopwatch timeCheck = new Stopwatch();
+        timeCheck.Start();
         for (int i = array.Length - 1; i >= 0; i--)
         {
             for (int j = 0; j < i; j++)
@@ -79,6 +89,31 @@
                 }
             }
         }
+        timeCheck.Stop();
+        Console.WriteLine($"걸린 시간 {timeCheck.ElapsedTicks}");
+    }
+
+    public static void InsertionSort(int[] array)
+    {
+        if (array.Length <= 1)
+        {
+            return;
+        }
+
+        Stopwatch timeCheck = new Stopwatch();
+        timeCheck.Start();
+        for (int i = 1; i < array.Length; i++)
+        {
+            for (int j = i; j >= 1; j--)
+            {
+                if (array[j] < array[j - 1])
+                {
+                    (array[j], array[j - 1]) = (array[j - 1], array[j]);
+                }
+            }
+        }
+        timeCheck.Stop();
+        Console.WriteLine($"걸린 시간(ns) {timeCheck.ElapsedTicks}");
     }
 
     public static int IndexOf(int[] array, int value)
