@@ -10,8 +10,8 @@
     }
     static void Main(string[] args)
     {
-        int[] array = { 10, 1, 2, 5, 3, -10, 7 };
-        int[] myArray = { 10, 1, 2, 5, 3, -10, 7 };
+        int[] array = { 10, 1, 2, 5, 3, -10, 7, -5598 };
+        int[] myArray = (int[])array.Clone();
 
        
         Console.WriteLine($"\nIndexOf(array, 3)");
