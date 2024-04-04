@@ -46,7 +46,7 @@ public class MyArray
     public static void Resize(ref int[] array, int newSize)
     {
         int[] temp = new int[newSize];
-        for (int i = 0; i < (array.Length < newSize ? array.Length : newSize); i++)
+        for (int i = 0; i < Math.Min(array.Length, newSize); i++)
         {
             temp[i] = array[i];
         }
@@ -57,7 +57,7 @@ public class MyArray
     {
         for (int i = 0; i < array.Length; i++)
         {
-            array[i] = 0;
+            array[i] = default;
         }
     }
 
@@ -65,7 +65,7 @@ public class MyArray
     {
         for (int i = 0; i < length; ++i)
         {
-            array[index + i] = 0;
+            array[index + i] = default;
         }
     }
 
@@ -90,6 +90,7 @@ public class MyArray
         }
         timeCheck.Stop();
         Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
+
     }
 
     public static void InsertionSort(int[] array)
@@ -117,6 +118,31 @@ public class MyArray
         }
         timeCheck.Stop();
         Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
+    }
+
+    public static void SelectionSort(int[] array)
+    {
+        if (array.Length <= 1)
+        {
+            return;
+        }
+        Stopwatch timeCheck = new Stopwatch();
+        timeCheck.Start();
+        for (int i = 0; i < array.Length; i++)
+        {
+            int min = i;
+            for (int j = i + 1; j < array.Length; j++)
+            {
+                if (array[j] < array[min])
+                {
+                    min = j;
+                }
+            }
+            (array[i], array[min]) = (array[min], array[i]);
+        }
+        timeCheck.Stop();
+        Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
+
     }
 
     public static int IndexOf(int[] array, int value)

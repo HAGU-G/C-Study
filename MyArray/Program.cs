@@ -1,4 +1,6 @@
-﻿internal class Program
+﻿using System.Reflection;
+
+internal class Program
 {
     static void WriteArray(int[] array)
     {
@@ -11,7 +13,7 @@
     static void Main(string[] args)
     {
         Random r = new Random();
-        int[] array = new int[10];
+        int[] array = new int[30];
         for(int i = 0; i< array.Length; i++)
         {
             array[i] = r.Next(-100, 101);
@@ -19,13 +21,12 @@
         int[] myArray = (int[])array.Clone();
         WriteArray(array);
         WriteArray(myArray);
-
         Console.WriteLine($"\nIndexOf(array, 3)");
         Console.WriteLine(Array.IndexOf(array, 3));
         Console.WriteLine(MyArray.IndexOf(myArray, 3));
 
         Array.Sort(array);
-        MyArray.Sort(myArray);
+        MyArray.SelectionSort(myArray);
         //MyArray.InsertionSort(myArray);
         Console.WriteLine($"\nSort(array)");
         WriteArray(array);
