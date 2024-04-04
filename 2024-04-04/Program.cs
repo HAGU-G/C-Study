@@ -79,17 +79,14 @@
         public void Sort(object[] array, IComparer comparer)
         {
             if (array.Length <= 1)
-            {
                 return;
-            }
+
             for (int i = array.Length - 1; i >= 0; i--)
             {
                 for (int j = 0; j < i; j++)
                 {
                     if (comparer.Compare(array[j], array[j + 1]) > 0)
-                    {
                         (array[j], array[j + 1]) = (array[j + 1], array[j]);
-                    }
                 }
             }
         }
@@ -100,9 +97,7 @@
         public void Sort(object[] array, IComparer comparer)
         {
             if (array.Length <= 1)
-            {
                 return;
-            }
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -110,9 +105,7 @@
                 for (int j = i + 1; j < array.Length; j++)
                 {
                     if (comparer.Compare(array[j], array[min]) < 0)
-                    {
                         min = j;
-                    }
                 }
                 (array[i], array[min]) = (array[min], array[i]);
             }
@@ -124,22 +117,16 @@
         public void Sort(object[] array, IComparer comparer)
         {
             if (array.Length <= 1)
-            {
                 return;
-            }
 
             for (int i = 1; i < array.Length; i++)
             {
                 for (int j = i; j >= 1; j--)
                 {
-                    if (comparer.Compare(array[j], array[j - 1]) < 0)
-                    {
-                        (array[j], array[j - 1]) = (array[j - 1], array[j]);
-                    }
-                    else
-                    {
+                    if (comparer.Compare(array[j], array[j - 1]) >= 0)
                         break;
-                    }
+
+                    (array[j], array[j - 1]) = (array[j - 1], array[j]);
                 }
             }
         }
