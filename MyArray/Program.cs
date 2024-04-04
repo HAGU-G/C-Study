@@ -1,40 +1,64 @@
-﻿using System.Reflection;
+﻿public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
+{
+    public int a;
+    public MyClass(int num = 0) { a = num; }
+
+    public int CompareTo(MyClass? obj)
+    {
+        return a - obj.a;
+    }
+
+    bool IEquatable<MyClass>.Equals(MyClass? other)
+    {
+        return a == other?.a;
+    }
+
+    public override string? ToString()
+    {
+        return a.ToString();
+    }
+}
+
 
 internal class Program
 {
-    static void WriteArray(int[] array)
+
+    static void WriteArray<T>(T[] array)
     {
-        foreach (int i in array)
+        foreach (T i in array)
         {
-            Console.Write($"{i} ");
+            Console.Write($"{i?.ToString()} ");
         }
         Console.WriteLine();
     }
     static void Main(string[] args)
     {
+        //int, float, 사용자 정의 클래스, string 확인 완료
         Random r = new Random();
-        int[] array = new int[30];
+        MyClass[] array = new MyClass[30];
         for(int i = 0; i< array.Length; i++)
         {
-            array[i] = r.Next(-100, 101);
+            array[i] = new MyClass(r.Next(-100, 101));
         }
-        int[] myArray = (int[])array.Clone();
+        MyClass[] myArray = (MyClass[])array.Clone();
+        MyClass[] srcArray = { new MyClass(1), new MyClass(2), new MyClass(3), new MyClass(4) };
         WriteArray(array);
         WriteArray(myArray);
         Console.WriteLine($"\nIndexOf(array, 3)");
-        Console.WriteLine(Array.IndexOf(array, 3));
-        Console.WriteLine(MyArray.IndexOf(myArray, 3));
+        Console.WriteLine(Array.IndexOf(array, new MyClass(3)));
+        Console.WriteLine(MyArray.IndexOf(myArray, new MyClass(3)));
 
         Array.Sort(array);
-        MyArray.SelectionSort(myArray);
-        //MyArray.InsertionSort(myArray);
+        //MyArray.Sort(myArray);
+        //MyArray.SelectionSort(myArray);
+        MyArray.InsertionSort(myArray);
         Console.WriteLine($"\nSort(array)");
         WriteArray(array);
         WriteArray(myArray);
 
         Console.WriteLine($"\nBinarySearch(array, 3)");
-        Console.WriteLine(Array.BinarySearch(array, 3));
-        Console.WriteLine(MyArray.BinarySearch(myArray, 3));
+        Console.WriteLine(Array.BinarySearch(array, new MyClass(3)));
+        Console.WriteLine(MyArray.BinarySearch(myArray, new MyClass(3)));
 
         Array.Reverse(array);
         MyArray.Reverse(myArray);
@@ -48,13 +72,12 @@ internal class Program
         WriteArray(array);
         WriteArray(myArray);
 
-        Array.Fill(array, 100, 3, 1);
-        MyArray.Fill(myArray, 100, 3, 1);
+        Array.Fill(array, new MyClass(100), 3, 1);
+        MyArray.Fill(myArray, new MyClass(100), 3, 1);
         Console.WriteLine($"\nFill(array, 100, 3, 1)");
         WriteArray(array);
         WriteArray(myArray);
 
-        int[] srcArray = { 1, 2, 3, 4 };
         Array.Copy(srcArray, array, srcArray.Length);
         MyArray.Copy(srcArray, myArray, srcArray.Length);
         Console.WriteLine($"\nCopy(srcArray, array, srcArray.Length)");

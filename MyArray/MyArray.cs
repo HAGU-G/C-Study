@@ -2,7 +2,7 @@
 
 public class MyArray
 {
-    public static void Reverse(int[] array)
+    public static void Reverse<T>(T[] array)
     {
         for (int i = 0; i < array.Length / 2; i++)
         {
@@ -10,7 +10,7 @@ public class MyArray
         }
     }
 
-    public static void Reverse(int[] array, int index, int length)
+    public static void Reverse<T>(T[] array, int index, int length)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(length);
         try
@@ -27,7 +27,7 @@ public class MyArray
         }
     }
 
-    public static void Fill(int[] array, int value, int startIndex, int count)
+    public static void Fill<T>(T[] array, T value, int startIndex, int count)
     {
         for (int i = 0; i < count; i++)
         {
@@ -35,7 +35,7 @@ public class MyArray
         }
     }
 
-    public static void Copy(int[] sourceArray, int[] destinationArray, int length)
+    public static void Copy<T>(T[] sourceArray, T[] destinationArray, int length)
     {
         for (int i = 0; i < length; i++)
         {
@@ -43,9 +43,9 @@ public class MyArray
         }
     }
 
-    public static void Resize(ref int[] array, int newSize)
+    public static void Resize<T>(ref T[] array, int newSize)
     {
-        int[] temp = new int[newSize];
+        T[] temp = new T[newSize];
         for (int i = 0; i < Math.Min(array.Length, newSize); i++)
         {
             temp[i] = array[i];
@@ -53,23 +53,23 @@ public class MyArray
         array = temp;
     }
 
-    public static void Clear(int[] array)
+    public static void Clear<T>(T[] array)
     {
         for (int i = 0; i < array.Length; i++)
         {
-            array[i] = default;
+            array[i] = default(T);
         }
     }
 
-    public static void Clear(int[] array, int index, int length)
+    public static void Clear<T>(T[] array, int index, int length)
     {
         for (int i = 0; i < length; ++i)
         {
-            array[index + i] = default;
+            array[index + i] = default(T);
         }
     }
 
-    public static void Sort(int[] array)
+    public static void Sort<T>(T[] array) where T : IComparable<T>
     {
         if (array.Length <= 1)
         {
@@ -82,7 +82,7 @@ public class MyArray
         {
             for (int j = 0; j < i; j++)
             {
-                if (array[j] > array[j + 1])
+                if (array[j].CompareTo(array[j + 1])>0)
                 {
                     (array[j], array[j + 1]) = (array[j + 1], array[j]);
                 }
@@ -93,7 +93,7 @@ public class MyArray
 
     }
 
-    public static void InsertionSort(int[] array)
+    public static void InsertionSort<T>(T[] array) where T : IComparable<T>
     {
         if (array.Length <= 1)
         {
@@ -106,7 +106,7 @@ public class MyArray
         {
             for (int j = i; j >= 1; j--)
             {
-                if (array[j] < array[j - 1])
+                if (array[j].CompareTo(array[j - 1]) < 0)
                 {
                     (array[j], array[j - 1]) = (array[j - 1], array[j]);
                 }
@@ -120,7 +120,7 @@ public class MyArray
         Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
     }
 
-    public static void SelectionSort(int[] array)
+    public static void SelectionSort<T>(T[] array) where T : IComparable<T>
     {
         if (array.Length <= 1)
         {
@@ -133,7 +133,7 @@ public class MyArray
             int min = i;
             for (int j = i + 1; j < array.Length; j++)
             {
-                if (array[j] < array[min])
+                if (array[j].CompareTo(array[min]) < 0)
                 {
                     min = j;
                 }
@@ -145,11 +145,11 @@ public class MyArray
 
     }
 
-    public static int IndexOf(int[] array, int value)
+    public static int IndexOf<T>(T[] array, T value) where T : IEquatable<T>
     {
         for (int i = 0; i < array.Length; i++)
         {
-            if (array[i] == value)
+            if (array[i].Equals(value))
             {
                 return i;
             }
@@ -157,7 +157,7 @@ public class MyArray
         return -1;
     }
 
-    public static int BinarySearch(int[] array, int value)
+    public static int BinarySearch<T>(T[] array, T value) where T : IEquatable<T>, IComparable<T>
     {
         int start = 0;
         int end = array.Length - 1;
@@ -165,11 +165,11 @@ public class MyArray
         while (start <= end)
         {
             int middle = (start + end) / 2;
-            if (array[middle] == value)
+            if (array[middle].Equals(value))
             {
                 return middle;
             }
-            else if (array[middle] < value)
+            else if (array[middle].CompareTo(value) < 0)
             {
                 start = middle + 1;
             }

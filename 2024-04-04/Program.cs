@@ -1,17 +1,17 @@
 ﻿namespace Interfacepractice
 {
 
-    public interface IComparer
+    public interface IComparer<T>
     {
-        int Compare(object x, object y);
+        int Compare(T x, T y);
     }
 
-    public class PersonComparer : IComparer
+    public class PersonComparer : IComparer<Person>
     {
         /// <summary>
         /// 나이 오름차순
         /// </summary>
-        public int Compare(object x, object y)
+        public int Compare(Person x, Person y)
         {
             //int? ret;
             //if ((ret = (x as Person)?.Age - (y as Person)?.Age) == null)
@@ -19,29 +19,29 @@
             //    //null 일때 동작할 코드
             //}
             //return ret.Value;
-            return (x as Person).Age - (y as Person).Age;
+            return x.Age - y.Age;
         }
     }
 
-    public class AnimalComparer : IComparer
+    public class AnimalComparer : IComparer<Animal>
     {
         /// <summary>
         /// 이름 내림차순
         /// </summary>
-        public int Compare(object x, object y)
+        public int Compare(Animal x, Animal y)
         {
-            return (y as Animal).Name.CompareTo((x as Animal).Name);
+            return x.Name.CompareTo(y.Name);
         }
     }
 
-    public class CarComparer : IComparer
+    public class CarComparer : IComparer<Car>
     {
         /// <summary>
         /// 년도 오름차순
         /// </summary>
-        public int Compare(object x, object y)
+        public int Compare(Car x, Car y)
         {
-            return (y as Car).Year - (x as Car).Year;
+            return y.Year - x.Year;
         }
     }
 
@@ -71,12 +71,12 @@
 
     public interface ISorter
     {
-        void Sort(object[] array, IComparer comparer);
+        void Sort<T>(T[] array, IComparer<T> comparer);
     }
 
     public class BubbleSort : ISorter
     {
-        public void Sort(object[] array, IComparer comparer)
+        public void Sort<T>(T[] array, IComparer<T> comparer)
         {
             if (array.Length <= 1)
                 return;
@@ -94,7 +94,7 @@
 
     public class SelectionSort : ISorter
     {
-        public void Sort(object[] array, IComparer comparer)
+        public void Sort<T>(T[] array, IComparer<T> comparer)
         {
             if (array.Length <= 1)
                 return;
@@ -114,7 +114,7 @@
 
     public class InsertionSort : ISorter
     {
-        public void Sort(object[] array, IComparer comparer)
+        public void Sort<T>(T[] array, IComparer<T> comparer)
         {
             if (array.Length <= 1)
                 return;
@@ -152,11 +152,11 @@
             new Person("John", 30),
             new Person("Jane", 25),
             new Person("Jake", 28)
-        };
+            };
 
-            //ISorter sorter = new BubbleSort();
+            ISorter sorter = new BubbleSort();
             //ISorter sorter = new InsertionSort();
-            ISorter sorter = new SelectionSort();
+            //ISorter sorter = new SelectionSort();
             sorter.Sort(people, new PersonComparer());
 
             Console.WriteLine();
@@ -169,10 +169,11 @@
             new Animal("Dog", 4),
             new Animal("Spider", 8),
             new Animal("Bird", 2)
-        };
-            //sorter = new BubbleSort();
+            };
+
+            sorter = new BubbleSort();
             //sorter = new InsertionSort();
-            sorter = new SelectionSort();
+            //sorter = new SelectionSort();
             sorter.Sort(animals, new AnimalComparer());
 
             Console.WriteLine();
@@ -185,20 +186,19 @@
             new Car("Tesla Model S", 2020),
             new Car("Ford Model T", 1927),
             new Car("Volkswagen Beetle", 1965)
-        };
+            };
 
-            //sorter = new BubbleSort();
+            sorter = new BubbleSort();
             //sorter = new InsertionSort();
-            sorter = new SelectionSort();
+            //sorter = new SelectionSort();
             sorter.Sort(cars, new CarComparer());
-
+            
             Console.WriteLine();
             foreach (Car car in cars)
             {
                 Console.WriteLine($"Model: {car.Model}, Year: {car.Year}");
             }
-
-
         }
     }
 }
+
