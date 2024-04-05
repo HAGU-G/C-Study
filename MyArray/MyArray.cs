@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
+using System.Net.Http.Headers;
 
 public class MyArray
 {
@@ -82,7 +84,7 @@ public class MyArray
         {
             for (int j = 0; j < i; j++)
             {
-                if (array[j].CompareTo(array[j + 1])>0)
+                if (array[j].CompareTo(array[j + 1]) > 0)
                 {
                     (array[j], array[j + 1]) = (array[j + 1], array[j]);
                 }
@@ -181,4 +183,89 @@ public class MyArray
         return -1;
     }
 
+    public static void ForEach<T>(T[] array, Action<T> action)
+    {
+        foreach (T item in array)
+        {
+            action(item);
+        }
+    }
+
+    public static bool Exists<T>(T[] array, Predicate<T> match)
+    {
+        foreach (T item in array)
+        {
+            if (match(item))
+                return true;
+        }
+        return false;
+    }
+    public static void Sort<T>(T[] array, Comparison<T> comparison)
+    {
+        //버블 정렬
+        //if (array.Length <= 1)
+        //{
+        //    return;
+        //}
+
+        //Stopwatch timeCheck = new Stopwatch();
+        //timeCheck.Start();
+        //for (int i = array.Length - 1; i >= 0; i--)
+        //{
+        //    for (int j = 0; j < i; j++)
+        //    {
+        //        if (comparison(array[j], array[j + 1]) > 0)
+        //        {
+        //            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+        //        }
+        //    }
+        //}
+        //timeCheck.Stop();
+        //Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
+
+        //삽입정렬
+        if (array.Length <= 1)
+        {
+            return;
+        }
+        Stopwatch timeCheck = new Stopwatch();
+        timeCheck.Start();
+        for (int i = 0; i < array.Length; i++)
+        {
+            int min = i;
+            for (int j = i + 1; j < array.Length; j++)
+            {
+                if (comparison(array[j], array[j - 1]) < 0)
+                {
+                    min = j;
+                }
+            }
+            (array[i], array[min]) = (array[min], array[i]);
+        }
+        timeCheck.Stop();
+        Console.WriteLine($"정렬 시간(ns) {timeCheck.ElapsedTicks}");
+    }
+
+    public static T? Find<T>(T[] array, Predicate<T> match)
+    {
+        foreach (T item in array)
+        {
+            if (match(item))
+                return item;
+        }
+        return default;
+    }
+
+    public static T[] FindAll<T>(T[] array, Predicate<T> match)
+    {
+        List<T> temp = new List<T>();
+        foreach (T item in array)
+        {
+            if (match(item))
+            {
+                temp.Add(item);
+            }
+        }
+        return temp.ToArray();
+    }
 }
