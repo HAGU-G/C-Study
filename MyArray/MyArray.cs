@@ -268,4 +268,8 @@ public class MyArray
         }
         return temp.ToArray();
     }
+
+    //FindIndex
+    //FindLast
+    //FindLastIndex
 }
