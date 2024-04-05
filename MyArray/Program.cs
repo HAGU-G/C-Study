@@ -108,7 +108,7 @@ internal class Program
         WriteArray(myArray);
 
         Console.WriteLine($"\nForEach(array, Lambda)");
-        int[] newArray = { 1, 2, 3, 4, 5, 6 };
+        int[] newArray = { 1, 2, 3, 4, 5, 6, 6, 6, 5, 6 };
         MyArray.ForEach(newArray, item => { Console.Write(item *= -1); });
         MyArray.ForEach(newArray, Console.Write);
         Console.WriteLine();
@@ -145,5 +145,13 @@ internal class Program
         Console.WriteLine($"\nFindAll(array, Predicate)");
         Console.Write("3의 배수! ");
         WriteArray(MyArray.FindAll(newArray, element => element % 3 == 0));
+
+        Console.WriteLine($"\nFindLast(array, Predicate)");
+        Console.Write("5 찾아 ");
+        Console.WriteLine(MyArray.FindLast(newArray, element => element == 5));
+
+        Console.WriteLine($"\nFindLastIndex(array, Predicate)");
+        Console.Write("5 찾아 ");
+        Console.WriteLine(MyArray.FindLastIndex(newArray, element => element == 5));
     }
 }

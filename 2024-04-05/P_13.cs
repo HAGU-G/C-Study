@@ -26,7 +26,7 @@ namespace _2024_04_05
         {
             //1
             MyDelegate Callback;
-
+            
             Callback = delegate (int a, int b) { return a + b; };
             Console.WriteLine(Callback(3, 4));
 

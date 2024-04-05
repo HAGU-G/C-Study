@@ -24,6 +24,12 @@ namespace _2024_04_05
             P_13.TestCode();
         }
 
+
+
+
+
+
+
         public static void TestCode()
         {
             var monster = new Monster();

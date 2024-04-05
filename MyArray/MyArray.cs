@@ -269,7 +269,32 @@ public class MyArray
         return temp.ToArray();
     }
 
-    //FindIndex
-    //FindLast
-    //FindLastIndex
+    public static int FindIndex<T>(T[] array, Predicate<T> match)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (match(array[i]))
+                return i;
+        }
+        return -1;
+    }
+
+    public static T? FindLast<T>(T[] array, Predicate<T> match)
+    {
+        for (int i = array.Length-1; i >=0; i--)
+        {
+            if (match(array[i]))
+                return array[i];
+        }
+        return default;
+    }
+    public static int FindLastIndex<T>(T[] array, Predicate<T> match)
+    {
+        for (int i = array.Length - 1; i >= 0; i--)
+        {
+            if (match(array[i]))
+                return i;
+        }
+        return -1;
+    }
 }
