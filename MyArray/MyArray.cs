@@ -21,7 +21,7 @@ public class MyArray
                 (array[index + i], array[lastIndex - i]) = (array[lastIndex - i], array[index + i]);
             }
         }
-        catch
+        catch (IndexOutOfRangeException)
         {
             throw new ArgumentException("Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
         }
