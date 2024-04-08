@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace _2024_04_05
 {
     //1. 클래스는 사용자 정의 데이터형이고 객체, 인스턴스는 클래스의 변수를 만든 것이다.

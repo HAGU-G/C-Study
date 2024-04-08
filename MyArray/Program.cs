@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Security;
-
+﻿
 public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
 {
     public int a;

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _2024_04_05
 {
@@ -51,16 +46,6 @@ namespace _2024_04_05
 
         public static void TestCode()
         {
-
-            //5. 코드 완성
-            Hashtable ht = new Hashtable();
-            ht["회사"] = "Microsoft";
-            ht["URL"] = "www.microsoft.com";
-
-            Console.WriteLine("회사 : {0}", ht["회사"]);
-            Console.WriteLine("URL : {0}", ht["URL"]);
-
-
             int[,] a ={
                 {1, 2, 3},
                 {3, 4, 6}};
@@ -74,6 +59,15 @@ namespace _2024_04_05
             {
                 Console.WriteLine(i);
             }
+
+            //5. 코드 완성
+            Hashtable ht = new Hashtable();
+            ht["회사"] = "Microsoft";
+            ht["URL"] = "www.microsoft.com";
+
+            Console.WriteLine("회사 : {0}", ht["회사"]);
+            Console.WriteLine("URL : {0}", ht["URL"]);
+
 
         }
     }

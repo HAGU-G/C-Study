@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Diagnostics;
-using System.Net.Http.Headers;
+﻿using System.Diagnostics;
 
 public class MyArray
 {

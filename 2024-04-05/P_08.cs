@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace _2024_04_05
 {
     //1. 클래스나 구초제에서도 상속이 가능하다.

@@ -1,30 +1,36 @@
-﻿using System.Diagnostics;
-using System.Threading;
-
+﻿
 namespace _2024_04_05
 {
     internal class Flags
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Flags");
             Flags.TestCode();
             Console.WriteLine();
 
-            ACSetting a = new ACSetting();
-            //P_07
-            Console.WriteLine(a.GetFahrenheit());
+
+            Console.WriteLine("7번");
+            ACSetting ac = new ACSetting();
+            ac.currentInCelesius = 25;
+            ac.target = 25;
+            Console.WriteLine(ac.GetFahrenheit());
             Console.WriteLine();
 
+
+            Console.WriteLine("9번");
             P_09.TestCode();
             Console.WriteLine();
 
+
+            Console.WriteLine("10번");
             P_10.TestCode();
             Console.WriteLine();
 
+
+            Console.WriteLine("13번");
             P_13.TestCode();
         }
-
-
 
 
 
