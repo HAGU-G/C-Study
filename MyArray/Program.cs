@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel;
+
 public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
 {
     public int a;
@@ -151,5 +153,17 @@ internal class Program
         Console.WriteLine($"\nFindLastIndex(array, Predicate)");
         Console.Write("5 찾아 ");
         Console.WriteLine(MyArray.FindLastIndex(newArray, element => element == 5));
+
+
+        Console.WriteLine("\nQuickSort(array, left, right, Comparison)");
+        int[] quickArray = new int[21];
+        for (int i = 0; i < quickArray.Length; i++)
+        {
+            quickArray[i] = r.Next(-100, 101);
+        }
+
+        WriteArray(quickArray);
+        MyArray.QuickSort(quickArray, 0, quickArray.Length - 1, (i1, i2) => i1 - i2);
+        WriteArray(quickArray);
     }
 }

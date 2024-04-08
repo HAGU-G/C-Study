@@ -145,6 +145,63 @@ public class MyArray
 
     }
 
+    public static void QuickSort<T>(T[] array, int left, int right, Comparison<T> comparison)
+    {
+        if (array.Length <= 1)
+            return;
+        
+        int nextleft = left;
+        int nextright = right;
+        int pivot = (left + right) / 2;
+
+        while (left != right)
+        {
+            bool findleft = false;
+            bool findright = false;
+
+            if (left < pivot)
+            {
+                if (comparison(array[left], array[pivot]) > 0) { findleft = true; }
+                else { left++; }
+            }
+
+            if (right > pivot)
+            {
+                if (comparison(array[right], array[pivot]) < 0) { findright = true; }
+                else { right--; }
+            }
+
+            if (findleft && findright)
+            {
+                (array[left], array[right]) = (array[right], array[left]);
+                left++;
+                right--;
+            }
+            else if (findleft && right == pivot)
+            {
+                for (int i = left; i < pivot; i++)
+                {
+                    (array[i], array[i + 1]) = (array[i + 1], array[i]);
+                }
+                pivot--;
+            }
+            else if (findright && left == pivot)
+            {
+                for (int i = right; i > pivot; i--)
+                {
+                    (array[i], array[i - 1]) = (array[i - 1], array[i]);
+                }
+                pivot++;
+            }
+        }
+
+        if (nextleft < pivot - 1)
+            QuickSort(array, nextleft, pivot - 1, comparison);
+        if (nextright > pivot + 1)
+            QuickSort(array, pivot + 1, nextright, comparison);
+
+    }
+
     public static int IndexOf<T>(T[] array, T value) where T : IEquatable<T>
     {
         for (int i = 0; i < array.Length; i++)
@@ -279,7 +336,7 @@ public class MyArray
 
     public static T? FindLast<T>(T[] array, Predicate<T> match)
     {
-        for (int i = array.Length-1; i >=0; i--)
+        for (int i = array.Length - 1; i >= 0; i--)
         {
             if (match(array[i]))
                 return array[i];
