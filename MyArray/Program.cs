@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel;
-
-public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
+﻿public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
 {
     public int a;
     public MyClass(int num = 0) { a = num; }
