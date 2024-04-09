@@ -22,7 +22,6 @@
 
 internal class Program
 {
-
     static void WriteArray<T>(T[] array)
     {
         foreach (T i in array)
