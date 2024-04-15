@@ -229,7 +229,7 @@
 	public void GroupByCompositeKey()
 	{
 		var queryHighScoreGroups = from s in students
-								   group s by new { FirstLetter = s.LastName[0], Score = s.ExamScores.Average() >= 85 };
+								   group s by new { FirstLetter = s.LastName[0], Score = s.ExamScores[0] >= 85d };
 
 		Console.WriteLine("\r\nGroup and order by a compound key:");
 		foreach (var scoreGroup in queryHighScoreGroups)
@@ -240,8 +240,8 @@
 			{
 				Console.WriteLine($"\t{item.FirstName} {item.LastName}");
 			}
-		}
-		/* Output:
+        }
+        /* Output:
 			Group and order by a compound key:
 			Name starts with A who scored more than 85
 					Terry Adams
@@ -266,7 +266,7 @@
 			Name starts with Z who scored more than 85
 					Eugene Zabokritski
 		*/
-	}
+    }
 }
 
 public class Program
