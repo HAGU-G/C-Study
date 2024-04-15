@@ -107,7 +107,7 @@
                 };
 
                 List<int> fourSixMultiples = (from x in mixedNumbers
-                                             where x % 4 == 0 || x % 6 == 0
+                                             where x % 4 == 0 || x % 6 == 0                                             
                                              select x).ToList();
                 Console.WriteLine();
                 foreach (int number in fourSixMultiples)
@@ -157,7 +157,7 @@
                     879.45, 9442.85, 2454.63, 45.65, 2340.29, 34.03, 4786.45, 745.31, 21.76
                 };
                 Console.WriteLine();
-                Console.WriteLine($"{Math.Round(prices.Max())}"); // 9,443
+                Console.WriteLine($"{Math.Round(prices.Max()):#,##0}"); // 9,443
 
                 /*
                     Store each number in the following List until a perfect square
