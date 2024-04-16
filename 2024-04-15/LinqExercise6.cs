@@ -160,8 +160,10 @@
 		Console.WriteLine("\r\nGroup by numeric range and project into a new anonymous type:");
 
 		var queryNumericRange = from s in students
-								orderby s.ExamScores.Average()
-								group s by GetPercentile(s);
+								//orderby s.ExamScores.Average()
+								group s by GetPercentile(s) into g
+								orderby g.Key
+								select g;
 
 		// Nested foreach required to iterate over groups and group items.
 		foreach (var studentGroup in queryNumericRange)
