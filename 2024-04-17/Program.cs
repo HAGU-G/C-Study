@@ -52,8 +52,9 @@ namespace Dir
             {
                 if (File.Exists(path))
                 {
-                    var fi = new FileInfo(path);
-                    fi.LastWriteTime = DateTime.Now;
+                    //var fi = new FileInfo(path);
+                    //fi.LastWriteTime = DateTime.Now;
+                    File.SetLastWriteTime(path, DateTime.Now);
                 }
                 else
                 {
@@ -65,11 +66,12 @@ namespace Dir
             {
                 if (Directory.Exists(path))
                 {
-                    var fi = new DirectoryInfo(path);
-                    fi.LastWriteTime = DateTime.Now;
+                    Directory.SetLastWriteTime(path, DateTime.Now);
                 }
                 else
                 {
+                    // "a/s/d/f"
+                    // a s d 폴더 모두 존재하는지 확인할 필요가 있다.
                     Directory.CreateDirectory(path);
                 }
             }

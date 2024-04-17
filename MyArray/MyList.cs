@@ -17,15 +17,16 @@ internal class MyList<T> : IEnumerable<T>
     }
 
     public int Count { get; }
-    private int front;
-    private int back;
+    private int frontIndex;
+    private int backIndex;
     public T this[int index] { get => item[index]; set => item[index] = value; }
 
     public MyList(int capacity = 10)
     {
         this.capacity = capacity;
         item = new T[this.capacity];
-        
+        frontIndex = capacity/4;
+        backIndex = frontIndex;
     }
 
     public IEnumerator<T> GetEnumerator()
