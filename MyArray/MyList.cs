@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System.Dynamic;
 
 internal class MyList<T> : IEnumerable<T>
 {
-    private T[] item;
+    private T[] items;
     private int capacity;
     public int Capacity
     {
@@ -11,31 +12,45 @@ internal class MyList<T> : IEnumerable<T>
         {
             capacity = value;
             T[] temp = new T[value];
-            item.CopyTo(temp, 0);
-            item = temp;
+            items.CopyTo(temp, 0);
+            items = temp;
         }
     }
 
-    public int Count { get; }
-    private int frontIndex;
-    private int backIndex;
-    public T this[int index] { get => item[index]; set => item[index] = value; }
+    public int Count { get; private set; }
+    public T this[int index]
+    {
+        get => items[index];
+        set => items[index] = value;
+    }
 
-    public MyList(int capacity = 10)
+    public MyList(int capacity = 0)
     {
         this.capacity = capacity;
-        item = new T[this.capacity];
-        frontIndex = capacity/4;
-        backIndex = frontIndex;
+        items = new T[this.capacity];
+        Count = 0;
     }
 
     public IEnumerator<T> GetEnumerator()
     {
         throw new NotImplementedException();
+
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        throw new NotImplementedException();
+        for (int i = 0; i <= Count; i++)
+        {
+            int index = i;
+            yield return items[index];
+        }
+    }
+
+    public void Add(T item)
+    {
+        if (Count >= capacity)
+            Capacity += Capacity / 2 + 1;
+
+        items[Count++] = item;
     }
 }
