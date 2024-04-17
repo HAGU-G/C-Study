@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization.Formatters;
+using System.Text;
 
 internal class Program
 {
@@ -34,21 +35,23 @@ internal class Program
                         myList.RemoveAt(myList.Count - 1);
                     break;
                 case 8:
-                    using (FileStream fs = File.Create(@".\list.txt"))
-                    using (TextWriter tw = new StreamWriter(fs))
+                    using (FileStream fs = File.Create(@".\list"))
+                    using (BinaryWriter bw = new BinaryWriter(fs))
                     {
                         foreach (int i in myList)
-                            tw.WriteLine(i);
+                        {
+                            bw.Write(i);
+                        }
                     }
                     break;
                 case 9:
-                    using (FileStream fs = File.OpenRead(@".\list.txt"))
-                    using (TextReader tw = new StreamReader(fs))
+                    using (FileStream fs = File.OpenRead(@".\list"))
+                    using (BinaryReader br = new BinaryReader(fs))
                     {
                         myList.Clear();
-                        while (tw.Peek() != -1)
+                        while (br.BaseStream.Position < br.BaseStream.Length)
                         {
-                            myList.Add(int.Parse(tw.ReadLine()));
+                            myList.Add(br.ReadInt32());
                         }
                     }
                     break;
