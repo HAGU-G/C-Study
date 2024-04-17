@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Dynamic;
-using System.Runtime.CompilerServices;
 
 internal class MyList<T> : IEnumerable<T>
 {
@@ -114,7 +112,8 @@ internal class MyList<T> : IEnumerable<T>
             Count--;
             return;
         }
-        for (int i = index; i < Count; i++)
+
+        for (int i = index; i < Count-1; i++)
         {
             (items[i], items[i + 1]) = (items[i + 1], items[i]);
         }
