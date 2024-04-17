@@ -109,6 +109,11 @@ internal class MyList<T> : IEnumerable<T>
     {
         IndexCheck(index);
         items[index] = default;
+        if (index == Count - 1)
+        {
+            Count--;
+            return;
+        }
         for (int i = index; i < Count; i++)
         {
             (items[i], items[i + 1]) = (items[i + 1], items[i]);

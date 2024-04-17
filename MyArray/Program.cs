@@ -33,7 +33,42 @@ internal class Program
         Console.WriteLine();
     }
     static void Main(string[] args)
-    {        
+    {
+
+        MyList<int> testList = new MyList<int>();
+        testList.Add(1);
+        testList.Add(2);
+        testList.Add(3);
+        testList.Capacity = 10;
+        testList.Insert(2, 5); 
+        testList.Insert(0, 10);
+        testList.Insert(3, 10);
+        testList.Remove(10);
+        //testList.RemoveAt(2);
+        testList[3] += 5;
+        testList.Clear();
+        for(int i = 0; i <100;i++)
+        {
+            testList.Add(i);
+        }
+
+        WriteArray(testList.ToArray());
+
+        Console.WriteLine(testList.Capacity);
+        Console.WriteLine(testList.Count);
+        Console.WriteLine(testList.Contains(55));
+        Console.WriteLine(testList.Contains(100));
+
+        var testLinq = from x in testList
+                       where x > 90
+                       select x;
+
+        foreach (int i in testLinq)
+            Console.WriteLine(i);
+
+        
+
+        return;
         //int, float, 사용자 정의 클래스, string 확인 완료
         Random r = new Random();
         MyClass[] array = new MyClass[30];
