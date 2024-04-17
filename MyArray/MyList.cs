@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Text.Json;
+﻿using System.Collections;
 
 internal class MyList<T> : IEnumerable<T>
 {
@@ -17,13 +15,17 @@ internal class MyList<T> : IEnumerable<T>
             item = temp;
         }
     }
+
     public int Count { get; }
+    private int front;
+    private int back;
     public T this[int index] { get => item[index]; set => item[index] = value; }
 
     public MyList(int capacity = 10)
     {
         this.capacity = capacity;
         item = new T[this.capacity];
+        
     }
 
     public IEnumerator<T> GetEnumerator()

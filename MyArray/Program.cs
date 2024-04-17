@@ -33,7 +33,7 @@ internal class Program
         Console.WriteLine();
     }
     static void Main(string[] args)
-    {
+    {        
         //int, float, 사용자 정의 클래스, string 확인 완료
         Random r = new Random();
         MyClass[] array = new MyClass[30];
