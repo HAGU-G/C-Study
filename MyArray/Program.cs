@@ -1,4 +1,6 @@
-﻿public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
+﻿using System.Collections;
+
+public class MyClass : IComparable<MyClass>, IEquatable<MyClass>
 {
     public int a;
     public MyClass(int num = 0) { a = num; }
