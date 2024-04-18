@@ -2,6 +2,7 @@
 {
     static void Main(string[] args)
     {
+        // 실습 3번 (MyList)
         TestAdd();
         TestInsert();
         TestRemove();
@@ -30,16 +31,16 @@
             {
                 case 0:
                     return;
-                case 1:
+                case 1: /////////////////////////////////////////////////// 추가
                     Console.Write("\n추가할 숫자를 입력해주세요 : ");
                     if (int.TryParse(Console.ReadLine(), out int num))
                         myList.Add(num);
                     break;
-                case 2:
+                case 2: /////////////////////////////////////////////////// 삭제
                     if (myList.Count > 0)
                         myList.RemoveAt(myList.Count - 1);
                     break;
-                case 8:
+                case 8: /////////////////////////////////////////////////// 저장
                     using (FileStream fs = File.Create(@".\list"))
                     using (BinaryWriter bw = new BinaryWriter(fs))
                     {
@@ -49,7 +50,7 @@
                         }
                     }
                     break;
-                case 9:
+                case 9: /////////////////////////////////////////////////// 로드
                     using (FileStream fs = File.OpenRead(@".\list"))
                     using (BinaryReader br = new BinaryReader(fs))
                     {
