@@ -1,72 +1,151 @@
-﻿internal class Program
+﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
+
+internal class Program
 {
+
+
     static void Main(string[] args)
     {
+        #region MYLIST_TEST
         // 실습 3번 (MyList)
-        TestAdd();
-        TestInsert();
-        TestRemove();
-        TestRemoveAt();
-        TestContains();
-        TestClear();
-        return; //저장, 로드 테스트하려면 주석처리
+        //TestAdd();
+        //TestInsert();
+        //TestRemove();
+        //TestRemoveAt();
+        //TestContains();
+        //TestClear();
+        //return; //저장, 로드 테스트하려면 주석처리
+        #endregion
 
-        int[] function = { 0, 1, 2, 3, 8, 9 };
+        int[] function = { 0, 1, 2, 3, 4, 6, 7, 8, 9 };
         int select = -1;
-        MyList<int> myList = new MyList<int>();
+        int num = 0; //추가할 숫자
+        List<int> myList = new List<int>();
+        List<Command> undo = new List<Command>();
+        List<Command> redo = new List<Command>();
+        string cmdList = @"1. 추가(뒤)    2. 삭제(뒤)
+3. 추가(앞)    4. 삭제(앞)
+6. 되돌리기    7. 다시실행
+8. 저장        9. 로드
+0. 끝";
+
 
         while (true)
         {
             do
             {
                 Console.Clear();
-                Console.WriteLine("1. 추가 (뒤)\r\n2. 삭제 (뒤)\r\n3. 출력\r\n8. 저장\r\n9. 로드\r\n0. 끝");
+                Console.WriteLine(cmdList);
                 Console.WriteLine("\nList :");
                 foreach (int i in myList)
                     Console.Write($"{i} ");
                 Console.Write("\n\n명령을 입력해주세요 : ");
+                int[] cusorPos = { Console.CursorLeft, Console.CursorTop };
+
+                Console.WriteLine("\n\n[History]");
+                for (int i = 0; i < undo.Count; i++)
+                {
+                    Console.Write(undo[i]);
+                    if (i == undo.Count - 1)
+                        Console.Write(" <<");
+                    Console.WriteLine();
+                }
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                for (int i = 0; i < redo.Count; i++)
+                {
+                    Console.WriteLine(redo[i]);
+                }
+                Console.ResetColor();
+
+                Console.CursorLeft = cusorPos[0];
+                Console.CursorTop = cusorPos[1];
             } while (!int.TryParse(Console.ReadLine(), out select) || !function.Contains(select));
 
             switch (select)
             {
                 case 0:
                     return;
-                case 1: /////////////////////////////////////////////////// 추가
-                    Console.Write("\n추가할 숫자를 입력해주세요 : ");
-                    if (int.TryParse(Console.ReadLine(), out int num))
-                        myList.Add(num);
+                case 1: /////////////////////////////////////////////////// 추가 (뒤)
+                    Console.Write("추가할 숫자를 입력해주세요 : ");
+                    if (int.TryParse(Console.ReadLine(), out num))
+                    {
+                        var cmd = new CmdPushBack() { List = myList, Number = num };
+                        cmd.Do();
+                        undo.Add(cmd);
+                    }
                     break;
-                case 2: /////////////////////////////////////////////////// 삭제
+                case 2: /////////////////////////////////////////////////// 삭제 (뒤)
                     if (myList.Count > 0)
-                        myList.RemoveAt(myList.Count - 1);
+                    {
+                        var cmd = new CmdPopBack() { List = myList };
+                        cmd.Do();
+                        undo.Add(cmd);
+                    }
+                    break;
+                case 3: /////////////////////////////////////////////////// 추가 (앞)
+                    Console.Write("추가할 위치와 숫자를 입력해주세요 : ");
+                    if (int.TryParse(Console.ReadLine(), out num))
+                    {
+                        var cmd = new CmdPushFront() { List = myList, Number = num };
+                        cmd.Do();
+                        undo.Add(cmd);
+                    }
+                    break;
+                case 4: /////////////////////////////////////////////////// 삭제 (앞)
+                    if (myList.Count > 0)
+                    {
+                        var cmd = new CmdPopFront() { List = myList };
+                        cmd.Do();
+                        undo.Add(cmd);
+                    }
+                    break;
+                case 6: /////////////////////////////////////////////////// 되돌리기
+                    if (undo.Count > 0)
+                    {
+                        var cmd = undo[undo.Count - 1];
+                        cmd.Undo();
+                        undo.RemoveAt(undo.Count - 1);
+                        redo.Insert(0, cmd);
+                    }
+                    break;
+                case 7: /////////////////////////////////////////////////// 다시실행
+                    if (redo.Count > 0)
+                    {
+                        var cmd = redo[0];
+                        cmd.Do();
+                        redo.RemoveAt(0);
+                        undo.Add(cmd);
+                    }
                     break;
                 case 8: /////////////////////////////////////////////////// 저장
-                    using (FileStream fs = File.Create(@".\list"))
-                    using (BinaryWriter bw = new BinaryWriter(fs))
+                    using (FileStream fs = File.Create(@".\list.txt"))
+                    using (TextWriter tw = new StreamWriter(fs))
                     {
-                        foreach (int i in myList)
-                        {
-                            bw.Write(i);
-                        }
+                        var settings = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
+                        string ml = JsonConvert.SerializeObject(myList, Formatting.Indented, settings);
+                        string ud = JsonConvert.SerializeObject(undo, Formatting.Indented, settings);
+                        string rd = JsonConvert.SerializeObject(redo, Formatting.Indented, settings);
+                        tw.WriteLine(ml);
+                        tw.WriteLine(ud);
+                        tw.WriteLine(rd);
                     }
                     break;
                 case 9: /////////////////////////////////////////////////// 로드
-                    using (FileStream fs = File.OpenRead(@".\list"))
-                    using (BinaryReader br = new BinaryReader(fs))
+                    undo.Clear();
+                    redo.Clear();
+                    using (FileStream fs = File.OpenRead(@".\list.txt"))
+                    using (TextReader br = new StreamReader(fs))
                     {
-                        myList.Clear();
-                        while (br.BaseStream.Position < br.BaseStream.Length)
-                        {
-                            myList.Add(br.ReadInt32());
-                        }
                     }
                     break;
-
             }
         }
     }
 
-
+    #region MYLIST_TEST_FUNC
     public static void TestAdd()
     {
         Console.WriteLine("Testing Add method:");
@@ -180,4 +259,5 @@
 
         Console.WriteLine();
     }
+    #endregion
 }

@@ -43,8 +43,8 @@ internal class MyList<T> : IEnumerable<T>
     {
         for (int i = 0; i < Count; i++)
         {
-            int index = i;
-            yield return items[index];
+            //int index = i; //T형을 리턴하기 때문에 캡쳐되지 않는다.
+            yield return items[i];
         }
     }
 
