@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
+using System.Net.WebSockets;
 using System.Text;
 
 internal class Program
@@ -124,21 +126,42 @@ internal class Program
                     using (FileStream fs = File.Create(@".\list.txt"))
                     using (TextWriter tw = new StreamWriter(fs))
                     {
+                        //무명형식을 만들고 직렬화
+                        var save = new { List = myList, Undo = undo, Redo = redo };
+                        
                         var settings = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
-                        string ml = JsonConvert.SerializeObject(myList, Formatting.Indented, settings);
-                        string ud = JsonConvert.SerializeObject(undo, Formatting.Indented, settings);
-                        string rd = JsonConvert.SerializeObject(redo, Formatting.Indented, settings);
-                        tw.WriteLine(ml);
-                        tw.WriteLine(ud);
-                        tw.WriteLine(rd);
+                        tw.WriteLine(JsonConvert.SerializeObject(save, Formatting.Indented, settings));
+                        
                     }
                     break;
                 case 9: /////////////////////////////////////////////////// 로드
                     undo.Clear();
                     redo.Clear();
+                    myList.Clear();
                     using (FileStream fs = File.OpenRead(@".\list.txt"))
                     using (TextReader br = new StreamReader(fs))
                     {
+                        //무명형식으로 역직렬화 하기 위한 정의
+                        var saveDef = new { List = new List<int>(), Undo = new List<Command>(), Redo = new List<Command>() };
+                        
+                        //역직렬화
+                        var settings = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
+                        var save = JsonConvert.DeserializeAnonymousType(br.ReadToEnd(), saveDef, settings);
+                        
+                        
+                        myList = save.List;
+                        undo = save.Undo;
+                        redo = save.Redo;
+
+                        foreach(var c in undo)
+                        {
+                            c.List = myList;
+                        }
+
+                        foreach(var c in redo)
+                        {
+                            c.List = myList;
+                        }
                     }
                     break;
             }
