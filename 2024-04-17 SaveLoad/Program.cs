@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Net.Http.Headers;
-using System.Net.WebSockets;
-using System.Text;
 
 internal class Program
 {
-
-
     static void Main(string[] args)
     {
         #region MYLIST_TEST
@@ -32,7 +26,6 @@ internal class Program
 6. 되돌리기    7. 다시실행
 8. 저장        9. 로드
 0. 끝";
-
 
         while (true)
         {
@@ -147,7 +140,6 @@ internal class Program
                         //역직렬화
                         var settings = new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto };
                         var save = JsonConvert.DeserializeAnonymousType(br.ReadToEnd(), saveDef, settings);
-                        
                         
                         myList = save.List;
                         undo = save.Undo;
